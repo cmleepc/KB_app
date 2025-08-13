@@ -7,3 +7,4 @@ matplotlib>=3.8.0
 plotly>=5.18.0
 scikit-learn>=1.4.0
 pykrx>=1.0.47
+scipy>=1.11.0
