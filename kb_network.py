@@ -250,7 +250,14 @@ def fiedler_value(G: nx.Graph, weight: str = "sim") -> float:
         return 0.0
     if not nx.is_connected(G):
         return 0.0
-    L = nx.laplacian_matrix(G, weight=weight).astype(float).A
+    L = nx.laplacian_matrix(G, weight=weight)
+    # scipy sparse면 toarray(), ndarray면 그대로
+    if hasattr(L, "toarray"):
+        L = L.toarray()
+    else:
+        L = np.asarray(L)
+    L = L.astype(float)
+
     eigvals = np.linalg.eigvalsh(L)
     eigvals = np.sort(np.real(eigvals))
     return float(eigvals[1]) if len(eigvals) >= 2 else 0.0
